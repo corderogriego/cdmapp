@@ -1,26 +1,39 @@
 package com.mcv.cdmapp.modelo;
 
-import java.util.HashMap;
+import java.io.Serializable;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+//@IdClass(PkResultado.class)
 @Getter @Setter
-public class Resultado {
+public class Resultado implements Serializable{
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer idResultado;
-	private HashMap<Integer, Corredor> posiciones;
+	private static final long serialVersionUID = 1L;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@EmbeddedId
+	private PkResultado pkResultado;
+	
+	private Integer posicion;
+	private Integer puntos;
+	
+	@MapsId("id_corredor")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "idCorredor")
+	private Corredor corredor;
+	
+	@MapsId("id_prueba")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "idPrueba")
 	private Prueba prueba;
+	
+	
 }
