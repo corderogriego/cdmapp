@@ -1,4 +1,4 @@
-package com.mcv.cdmapp.controlador;
+package com.mcv.cdmapp.controller;
 
 public class PruebaControlador {
 

@@ -1,4 +1,4 @@
-package com.mcv.cdmapp.modelo;
+package com.mcv.cdmapp.model;
 
 import java.io.Serializable;
 
@@ -9,15 +9,15 @@ import lombok.Setter;
 
 @Embeddable
 @Getter @Setter
-public class PkResultado implements Serializable {
+public class PkResult implements Serializable {
 
 	private Integer idCorredor;
 	
 	private Integer idPrueba;
     
-    public PkResultado() {}
+    public PkResult() {}
     
-	public PkResultado(int idCorredor, int idPrueba) {
+	public PkResult(int idCorredor, int idPrueba) {
 		super();
 		this.idCorredor = idCorredor;
 		this.idPrueba = idPrueba;
@@ -38,7 +38,7 @@ public class PkResultado implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PkResultado other = (PkResultado) obj;
+		PkResult other = (PkResult) obj;
 		if (idCorredor == null) {
 			if (other.idCorredor != null)
 				return false;

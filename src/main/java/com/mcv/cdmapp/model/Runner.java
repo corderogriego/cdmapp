@@ -1,16 +1,13 @@
-package com.mcv.cdmapp.modelo;
+package com.mcv.cdmapp.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -19,17 +16,17 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-public class Corredor {
+public class Runner {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer idCorredor;
+	private Integer idRunner;
 	
-	private String nombre;
+	private String name;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Club club;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "corredor")
-	private List<Resultado> resultados = new ArrayList<>();
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "runner")
+	private List<Result> results = new ArrayList<>();
 }

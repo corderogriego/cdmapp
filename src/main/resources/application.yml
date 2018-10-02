@@ -24,7 +24,7 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-      dialect: org.hibernate.dialect.MySQL57Dialect
+      dialect: org.hibernate.dialect.MariaDB53Dialect
       #use-new-id-generator-mappings: true
       #database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
       #dialect: org.hibernate.dialect.MySQLMyISAMDialect
