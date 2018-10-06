@@ -24,7 +24,7 @@ public class ClubMapperImp implements ClubMapper{
 	@Override
 	public DtoClub mapToDto(Club club) {
 		
-		Club c = clubServiceImp.clubById(club.getIdClub());
+		Club c = clubServiceImp.getOne(club.getIdClub());
 		
 		dtoClub.setIdClub(c.getIdClub());
 		dtoClub.setName(c.getName());

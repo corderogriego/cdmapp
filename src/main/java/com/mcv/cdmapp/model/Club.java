@@ -25,4 +25,11 @@ public class Club {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "club")
 	private List<Runner> runners = new ArrayList<>();
+
+	@Override
+	public String toString() {
+		return "Club [name=" + name + "]";
+	}
+	
+	
 }

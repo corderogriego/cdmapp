@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,10 +24,23 @@ public class Runner {
 	private Integer idRunner;
 	
 	private String name;
+	private Integer year;
 	
+	public Runner() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Club club;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "runner")
 	private List<Result> results = new ArrayList<>();
+
+	@Override
+	public String toString() {
+		return "Runner [idRunner=" + idRunner + ", name=" + name + ", year=" + year + ", club=" + club + "]";
+	}
+	
+	
 }

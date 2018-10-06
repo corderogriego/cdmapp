@@ -1,22 +1,29 @@
 package com.mcv.cdmapp.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.domain.Pageable;
 
+import com.mcv.cdmapp.dto.DtoMaxPoints;
 import com.mcv.cdmapp.model.Club;
+import com.mcv.cdmapp.model.Race;
 
 public interface ClubService {
 
 	String clubMaxPoints();
 
-	Club clubById(Integer idClub);
-	
-	List<Club> clubAll();
+	List<Club> findAll(Pageable pageable, String name);
 	
 	void deleteClub(Integer idClub);
 	
-	Optional<Club> addClub(Club club);
+	Club addClub(Club club);
+	
+	void update(Club club);
+
+	Club getOne(Integer idClub);
+	
+	List<Club> findByRaceOrderByPoints(Integer idRace) throws IOException;
 	
 }

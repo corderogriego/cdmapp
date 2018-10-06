@@ -25,9 +25,8 @@ public class Race {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idRace;
 	
-	private Date dateRace;
+	private String date;
 	private String name;
-	private Integer km; 
 		
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "race")
 	private List<Result> results = new ArrayList<>();
