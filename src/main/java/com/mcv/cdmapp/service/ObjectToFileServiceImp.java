@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ObjectToFileServiceImp implements ObjectToFileService{
 
-	public static String FILEPATH = "/home/make";	
+	public static String FILEPATH = "/home/make/";	
 	
 	@Override
 	public void saveToFile(String result, String master) throws IOException {

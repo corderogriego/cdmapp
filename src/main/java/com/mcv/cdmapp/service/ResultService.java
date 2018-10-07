@@ -2,6 +2,7 @@ package com.mcv.cdmapp.service;
 
 import java.util.List;
 
+import com.mcv.cdmapp.model.Race;
 import com.mcv.cdmapp.model.Result;
 
 public interface ResultService {
@@ -24,5 +25,10 @@ public interface ResultService {
      * Obtiene todos los resultados
      * */
 	List<Result> findAll();
+	
+	/**
+     * Obtiene todos los resultados de una carrera
+     * */
+	List<Result> findByRace(Integer idRace);
 
 }

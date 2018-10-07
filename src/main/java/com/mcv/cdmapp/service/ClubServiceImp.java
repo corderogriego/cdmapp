@@ -9,18 +9,22 @@ import java.util.Map;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.mcv.cdmapp.dao.ClubDAO;
 import com.mcv.cdmapp.model.Club;
 import com.mcv.cdmapp.model.Puntuation;
+import com.mcv.cdmapp.model.Race;
 
 @Service
 public class ClubServiceImp implements ClubService{
 
 	@Autowired
 	ClubDAO clubDAO;
+	@Autowired
+	RaceService raceService;
 	@Autowired
 	PuntuationService puntuationService;
 	@Autowired
@@ -31,49 +35,26 @@ public class ClubServiceImp implements ClubService{
 		return clubDAO.getOne(idClub);
 	}
 
-//	@Override
-//	public void deleteClub(Integer idClub) {
-//		clubDAO.deleteById(idClub);		
-//	}
-
 	@Override
 	public Club addClub(Club club) {
-			
-//		clubDAO.findById(club.getIdClub());
 		return clubDAO.save(club);	
 	}
 
-//	@Override
-//	public void update(Club club) {
-//		
-//		clubDAO.saveAndFlush(club);
-//		
-//	}
-
-//	@Override
-//	public List<Club> findAll(Pageable pageable, String name) {
-//		return clubDAO.findByNameContaining(name, pageable).getContent();
-//		
-//	}
-
-//	@Override
-//	public String clubMaxPoints() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-
 	@Override
 	public List<Club> findByRaceOrderByPoints(Integer idRace) throws IOException {
+		Race r = raceService.get(idRace);
 		
 		List<Puntuation> puntuations = puntuationService.getAllOrderByPosition();
 		Integer podiumSize= puntuations.size();		
-		List<Club> clubs = clubDAO.findClubNameByMaxPoints(idRace, podiumSize);		
+	
+		List<Club> clubs = clubDAO.findClubNameByMaxPoints(r,PageRequest.of(0,  podiumSize)).getContent();		
 		
 		String clasif = sortedMap(createClasif(puntuations, clubs));
 		
 		objectToFileService.saveToFile(clasif, "Clubs clasification");
+
+		return clubDAO.findClubNameByMaxPoints(r,PageRequest.of(0,  podiumSize)).getContent();		
 		
-		return clubDAO.findClubNameByMaxPoints(idRace, podiumSize);
 	}	
 	
 	/**

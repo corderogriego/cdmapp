@@ -14,7 +14,7 @@ import com.mcv.cdmapp.model.Runner;
 public class ResultServiceImp implements ResultService{
 
 	@Autowired
-	private ResultDAO resultDAO;
+	ResultDAO resultDAO;
 	@Autowired
 	RaceService raceService;
 	@Autowired
@@ -41,6 +41,13 @@ public class ResultServiceImp implements ResultService{
 
 	@Override
 	public List<Result> findAll() {
+		
 		return resultDAO.findAll();
+	}
+
+	@Override
+	public List<Result> findByRace(Integer idRace) {
+		Race r = raceService.get(idRace);
+		return resultDAO.findByRaceOrderBySeconds(r);
 	}
 }

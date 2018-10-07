@@ -24,14 +24,14 @@ public class ResultController {
 	@Autowired
 	ResultService resultService;
 	
-	@GetMapping("/{idResult}")
-	public DtoResult get(@PathVariable Integer idResult) {
-		return resultMapper.mapToDto(resultService.getOne(idResult));
-	}
+//	@GetMapping("/{idResult}")
+//	public DtoResult get(@PathVariable Integer idResult) {
+//		return resultMapper.mapToDto(resultService.getOne(idResult));
+//	}
 	
-	@GetMapping
-	public List<DtoResult> getAll(){
-		return resultMapper.listMapToDto(resultService.findAll());
+	@GetMapping("/{idRace}")
+	public List<DtoResult> getAll(@PathVariable Integer idRace){		
+		return resultMapper.listMapToDto(resultService.findByRace(idRace));
 	}
 	
 	@PostMapping("/{idRace}/{idRunner}")
