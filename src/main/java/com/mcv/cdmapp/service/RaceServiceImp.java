@@ -36,9 +36,9 @@ public class RaceServiceImp implements RaceService{
 	@Override
 	public void getClasif(Race race) throws IOException {
 			
-		saveClasif(runnerService.getAllByRaceTime(race,20,29),"Master29");
-		saveClasif(runnerService.getAllByRaceTime(race,30,39),"Master39");
-		saveClasif(runnerService.getAllByRaceTime(race,40,65),"Master40+");
+		saveClasif(runnerService.getAllByRaceTime(race,20,29),"Master20");
+		saveClasif(runnerService.getAllByRaceTime(race,30,39),"Master30");
+		saveClasif(runnerService.getAllByRaceTime(race,40,65),"Master40");
 	
 	}
 	

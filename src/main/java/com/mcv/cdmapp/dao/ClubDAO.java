@@ -26,8 +26,7 @@ public interface ClubDAO extends JpaRepository<Club, Integer>{
 //			"where re.id_race = ?1 order by seconds limit ?2 "
 //			,nativeQuery = true )
 //	List<Club> findClubNameByMaxPoints(Integer idRace, Integer limit);
-	
-	
+		
 	//Nombre de métodos	
 	List<Club> findByNameContaining(String name, Pageable pageable);
 	

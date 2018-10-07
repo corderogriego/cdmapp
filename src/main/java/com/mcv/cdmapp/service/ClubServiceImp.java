@@ -42,15 +42,14 @@ public class ClubServiceImp implements ClubService{
 
 	@Override
 	public List<Club> findByRaceOrderByPoints(Integer idRace) throws IOException {
+		
 		Race r = raceService.get(idRace);
 		
 		List<Puntuation> puntuations = puntuationService.getAllOrderByPosition();
 		Integer podiumSize= puntuations.size();		
-	
 		List<Club> clubs = clubDAO.findClubNameByMaxPoints(r,PageRequest.of(0,  podiumSize)).getContent();		
 		
-		String clasif = sortedMap(createClasif(puntuations, clubs));
-		
+		String clasif = sortedMap(createClasif(puntuations, clubs));		
 		objectToFileService.saveToFile(clasif, "Clubs clasification");
 
 		return clubDAO.findClubNameByMaxPoints(r,PageRequest.of(0,  podiumSize)).getContent();		
