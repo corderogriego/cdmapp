@@ -24,8 +24,7 @@ import com.mcv.cdmapp.service.RunnerService;
 public class RunnerController {
 
 	@Autowired
-	RunnerMapper runnerMapper;
-	
+	RunnerMapper runnerMapper;	
 	@Autowired
 	RunnerService runnerService;
 	
@@ -45,27 +44,20 @@ public class RunnerController {
 		return runnerMapper.mapToDto(runnerService.addOne(runnerMapper.dtoToMap(dtoRunner),idClub));
 	}
 	
-	@PostMapping
-	public DtoRunner add(@RequestBody DtoRunner dtoRunner) {
-		return runnerMapper.mapToDto(runnerService.addOne(runnerMapper.dtoToMap(dtoRunner)));
-	}
-	
 	@PutMapping("/{idRunner}")
-	public void update(@RequestBody DtoRunner dtoRunner, @PathVariable Integer idRunner) {
-		//dtoRunner.setIdRunner(idRunner);
+	public void update(@RequestBody DtoRunner dtoRunner, 
+			@PathVariable Integer idRunner) {		
 		Runner runner = runnerMapper.dtoToMap(dtoRunner);
-		//System.out.println(runner.getIdRunner());
-		//runner.setIdRunner(idRunner);
 		runnerService.update(runner);
 	}
 	
-//	@PutMapping("/{idRunner}/{idClub}")
-//	public void update(@RequestBody DtoRunner dtoRunner, @PathVariable Integer idRunner, 
-//			@PathVariable Integer idClub) {
-//		Runner runner = runnerMapper.dtoToMap(dtoRunner);
-//				
-//		runnerService.update(runner, idClub);
-//	}
+	@PutMapping("/{idRunner}/{idClub}")
+	public void update(@RequestBody DtoRunner dtoRunner, @PathVariable Integer idRunner, 
+			@PathVariable Integer idClub) {
+		Runner runner = runnerMapper.dtoToMap(dtoRunner);
+				
+		runnerService.update(runner, idClub);
+	}
 	
 	@DeleteMapping("/{idRunner}")
 	public void delete(@PathVariable Integer idRunner) {

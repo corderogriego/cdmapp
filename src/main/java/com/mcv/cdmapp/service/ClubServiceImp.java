@@ -6,19 +6,15 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
-import javax.swing.text.Position;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.mcv.cdmapp.dao.ClubDAO;
 import com.mcv.cdmapp.model.Club;
 import com.mcv.cdmapp.model.Puntuation;
-import com.mcv.cdmapp.model.Race;
 
 @Service
 public class ClubServiceImp implements ClubService{
@@ -30,20 +26,15 @@ public class ClubServiceImp implements ClubService{
 	@Autowired
 	ObjectToFileService objectToFileService;
 	
-//	@Override
-//	public String clubMaxPoints() {
-//		return clubDAO.findClubNameByMaxPoints().toString();	
-//	}
-
 	@Override
 	public Club getOne(Integer idClub) {
 		return clubDAO.getOne(idClub);
 	}
 
-	@Override
-	public void deleteClub(Integer idClub) {
-		clubDAO.deleteById(idClub);		
-	}
+//	@Override
+//	public void deleteClub(Integer idClub) {
+//		clubDAO.deleteById(idClub);		
+//	}
 
 	@Override
 	public Club addClub(Club club) {
@@ -52,33 +43,67 @@ public class ClubServiceImp implements ClubService{
 		return clubDAO.save(club);	
 	}
 
-	@Override
-	public void update(Club club) {
-		
-		clubDAO.saveAndFlush(club);
-		
-	}
+//	@Override
+//	public void update(Club club) {
+//		
+//		clubDAO.saveAndFlush(club);
+//		
+//	}
 
-	@Override
-	public List<Club> findAll(Pageable pageable, String name) {
-		
-			return clubDAO.findByNameContaining(name, pageable).getContent();
-		
-	}
+//	@Override
+//	public List<Club> findAll(Pageable pageable, String name) {
+//		return clubDAO.findByNameContaining(name, pageable).getContent();
+//		
+//	}
 
-	@Override
-	public String clubMaxPoints() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public String clubMaxPoints() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 	@Override
 	public List<Club> findByRaceOrderByPoints(Integer idRace) throws IOException {
 		
 		List<Puntuation> puntuations = puntuationService.getAllOrderByPosition();
-		Integer podiumSize= puntuations.size();
+		Integer podiumSize= puntuations.size();		
+		List<Club> clubs = clubDAO.findClubNameByMaxPoints(idRace, podiumSize);		
 		
-		List<Club> clubs = clubDAO.findClubNameByMaxPoints(idRace, podiumSize);
+		String clasif = sortedMap(createClasif(puntuations, clubs));
+		
+		objectToFileService.saveToFile(clasif, "Clubs clasification");
+		
+		return clubDAO.findClubNameByMaxPoints(idRace, podiumSize);
+	}	
+	
+	/**
+     * Devuelve un map ordenado por valor
+     * @param collection El map que vamos a ordenar por valor
+     */
+	public String sortedMap(Map<String, Integer> collection){
+		
+		Map<String, Integer> pod = new LinkedHashMap<>();
+		collection.entrySet()
+				.stream()
+				.sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+				.forEachOrdered(c -> pod.put(c.getKey(), c.getValue()));
+
+		
+		String clasif = "";
+		for (Map.Entry<String, Integer> entry : pod.entrySet()) {
+		    clasif+= entry.getKey() + " " + entry.getValue() + " points.\n";		
+		}
+		
+		return clasif;
+	}
+	
+	/**
+     * Devuelve un map con una clasificación de carrera por puntos de club
+     * @param puntuations La lista que contiene las puntuaciones por puesto
+     * @param clubs La lista que contiene las posiciones en la carrera por club
+     */
+	public Map<String, Integer> createClasif(List<Puntuation> puntuations, 
+			List<Club> clubs){
 		
 		Map<String, Integer> podium = new HashMap();
 		
@@ -94,21 +119,6 @@ public class ClubServiceImp implements ClubService{
 						puntuations.get(i).getPoints());
 			}
 		}	
-		
-		Map<String, Integer> pod = new LinkedHashMap<>();
-		podium.entrySet()
-				.stream()
-				.sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
-				.forEachOrdered(c -> pod.put(c.getKey(), c.getValue()));
-
-		
-		String clasif = "";
-		for (Map.Entry<String, Integer> entry : pod.entrySet()) {
-		    clasif+= entry.getKey() + " " + entry.getValue() + " points.\n";		
-		}
-		
-		objectToFileService.saveToFile(clasif, "Clubs clasification");
-		
-		return clubDAO.findClubNameByMaxPoints(idRace, podiumSize);
-	}	
+		return podium;
+	}
 }

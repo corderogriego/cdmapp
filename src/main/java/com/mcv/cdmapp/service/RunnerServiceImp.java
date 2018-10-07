@@ -41,10 +41,10 @@ public class RunnerServiceImp implements RunnerService{
 		return runnerDAO.save(runner);
 	}
 
-	@Override
-	public Runner addOne(Runner runner) {
-		return runnerDAO.save(runner);
-	}
+//	@Override
+//	public Runner addOne(Runner runner) {
+//		return runnerDAO.save(runner);
+//	}
 	
 	@Override
 	public void update(Runner runner) {

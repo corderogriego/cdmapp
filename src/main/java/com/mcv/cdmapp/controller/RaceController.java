@@ -25,23 +25,21 @@ public class RaceController {
 	@Autowired
 	RaceMapper raceMapper;
 	@Autowired
-	RunnerMapper runnerMapper;
-	
+	RunnerMapper runnerMapper;	
 	@Autowired
 	RaceService raceService;
 	
 	@GetMapping("/{idRace}")
-	public List<DtoRunner> getClasif(@PathVariable Integer idRace) throws IOException{
+	public void getClasif(@PathVariable Integer idRace) throws IOException{
 		Race r = raceService.get(idRace);
-		return runnerMapper.listMapToDto(raceService.getClasif(r));
+		raceService.getClasif(r);
 	}
 	
 	@GetMapping("/{idRace}/club")
 	public void getClasifByClub(@PathVariable Integer idRace) throws IOException{
-		//Race r = raceService.get(idRace);
-		raceService.getClasifByClub(idRace);
-		
+		raceService.getClasifByClub(idRace);		
 	}
+	
 	@PostMapping
 	public DtoRace add(@RequestBody DtoRace dtoRace) {
 		Race race = raceMapper.dtoToMap(dtoRace);

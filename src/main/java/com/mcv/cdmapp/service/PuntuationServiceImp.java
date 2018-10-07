@@ -15,6 +15,6 @@ public class PuntuationServiceImp implements PuntuationService{
 	PuntuationDAO puntuationDAO;
 	
 	public List<Puntuation> getAllOrderByPosition(){
-		return puntuationDAO.findAll();//findAllByOrderByPositionAsc();
+		return puntuationDAO.findAll();
 	}
 }

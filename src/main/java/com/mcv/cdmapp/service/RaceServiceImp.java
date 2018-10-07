@@ -7,12 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mcv.cdmapp.dao.RaceDAO;
-import com.mcv.cdmapp.dao.RunnerDAO;
 import com.mcv.cdmapp.model.Club;
 import com.mcv.cdmapp.model.Race;
 import com.mcv.cdmapp.model.Runner;
-
-
 
 @Service
 public class RaceServiceImp implements RaceService{
@@ -37,23 +34,19 @@ public class RaceServiceImp implements RaceService{
 	}
 
 	@Override
-	public List<Runner> getClasif(Race race) throws IOException {
-				
-		List<Runner> runners = runnerService.getAllByRaceTime(race,16,19);		
-		runners.addAll(runnerService.getAllByRaceTime(race,20,29));
-		runners.addAll(runnerService.getAllByRaceTime(race,30,39));
-		runners.addAll(runnerService.getAllByRaceTime(race,40,65));
-		
-		
-		saveClasif(runnerService.getAllByRaceTime(race,16,19),"Master19");
+	public void getClasif(Race race) throws IOException {
+			
 		saveClasif(runnerService.getAllByRaceTime(race,20,29),"Master29");
 		saveClasif(runnerService.getAllByRaceTime(race,30,39),"Master39");
 		saveClasif(runnerService.getAllByRaceTime(race,40,65),"Master40+");
-		
-		return runners;
-		
+	
 	}
 	
+	/**
+     * Pasa una List a cadena de texto y la almacena en un archivo
+     * @param runners list que se va a pasar a cadena de texto
+     * @param master nombre para el archivo de texto que se va a almacenar
+     * */
 	public void saveClasif(List<Runner> runners, String master) throws IOException {
 		
 		String clasif = master+"\n";
